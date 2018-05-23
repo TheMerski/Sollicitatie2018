@@ -11,40 +11,70 @@ interface Producten {
     producten: Product[];
 }
 
+
+
 export class Klanten extends React.Component<RouteComponentProps<{}>, Customers> {
     constructor() {
         super();
-
     }
 
-    //producten = [
-    //    { productnummer: 1, naam: "product1" }
-    //];
     customers = [
-        { klantnummer: 1, naam: "Zetacom", subKlant: { klantnummer: 2, naam: "SIM" }, producten: [{ productnummer: 1, naam: "product1" }] },
-        { klantnummer: 3, naam: "klant3", subKlant: null, producten: [{ productnummer: 10, naam: "product1" },{ productnummer: 1, naam: "product2" }]  },
+        {
+            klantnummer: 1,
+            naam: "Zetacom",
+            subKlant: [
+                { klantnummer: 2, naam: "SIM", subKlant: null, producten: [{ productnummer: 2, naam: "product2" }] }
+            ],
+            producten: [{ productnummer: 1, naam: "product1" }]
+        },
+        {
+            klantnummer: 3,
+            naam: "klant3",
+            subKlant: null,
+            producten: [{ productnummer: 0, naam: "product 0" }, { productnummer: 1, naam: "product1" }]
+        },
         { klantnummer: 4, naam: "klant4", subKlant: null, producten: [] },
         { klantnummer: 5, naam: "klant5", subKlant: null, producten: null }
     ];
-    
+
     public render() {
-       return (<div>
-
-                  <ul>
-                      {this.customers.map((customer) => {
-                            return (<li key={customer.klantnummer}> {customer.klantnummer} | {customer.naam}
-                            <ul>
-                            {customer.producten !== null && customer.producten.map((pn) => {
-                                        return (<li key={pn.productnummer}>{pn.naam} | {pn.productnummer} </li>);
-                            })}
-                            </ul>
-                   </li>);
+       // var customers = JSON.parse(datastring)["klant"]; 
+        return (<div>
+            <ul>
+                {this.customers.map((customer) => {
+                    return (<li key={customer.klantnummer}>
+                        <b>
+                            {customer.klantnummer} | {customer.naam}
+                        </b>
+                        <ul>
+                            {customer.producten !== null &&
+                                customer.producten.map((pn) => {
+                                return (<li key={pn.productnummer}><a href={'/Product?product=' + pn.productnummer}>{pn.naam} | {pn.productnummer}</a></li>);
+                                })}
+                        </ul>
+                        <ul>
+                            {customer.subKlant !== null &&
+                                customer.subKlant.map((sk) => {
+                                    return (<li key={sk.klantnummer}>
+                                        <b>{sk.klantnummer} | {sk.naam}</b>
+                                        <ul>
+                                            {sk.producten !== null &&
+                                                sk.producten.map((pn) => {
+                                                return (<li key={pn.productnummer}><a href={'/Product?product=' + pn.productnummer}>{pn.naam} | {pn.productnummer}</a></li>);
+                                                }
+                                                )
+                                            }
+                                        </ul>
+                                    </li>);
+                                })
+                            }
+                        </ul>
+                    </li>
+                    );
                 })}
-
-                  </ul>
-              </div>);
+            </ul>
+        </div>);
     }
-
 
 
 }
