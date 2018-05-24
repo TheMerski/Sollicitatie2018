@@ -16,7 +16,10 @@ interface Producten {
 export class Klanten extends React.Component<RouteComponentProps<{}>, Customers> {
     constructor() {
         super();
+        this.handleforminput = this.handleforminput.bind(this);
     }
+
+    producten = [{ productnummer: 0, naam: "product 0" }, { productnummer: 1, naam: "product 1" }, { productnummer: 2, naam: "product 2" }, { productnummer: 3, naam: "product 3" }];
 
     customers = [
         {
@@ -37,8 +40,13 @@ export class Klanten extends React.Component<RouteComponentProps<{}>, Customers>
         { klantnummer: 5, naam: "klant5", subKlant: null, producten: null }
     ];
 
+    handleforminput(event) {
+        const target = event.target;
+
+        this.customers.push()
+    }
+
     public render() {
-       // var customers = JSON.parse(datastring)["klant"]; 
         return (<div>
             <ul>
                 {this.customers.map((customer) => {
@@ -49,7 +57,7 @@ export class Klanten extends React.Component<RouteComponentProps<{}>, Customers>
                         <ul>
                             {customer.producten !== null &&
                                 customer.producten.map((pn) => {
-                                return (<li key={pn.productnummer}><a href={'/Product?product=' + pn.productnummer}>{pn.naam} | {pn.productnummer}</a></li>);
+                                    return (<li key={pn.productnummer}><a href={'/Product?product=' + pn.productnummer}>{pn.naam} | {pn.productnummer}</a></li>);
                                 })}
                         </ul>
                         <ul>
@@ -60,7 +68,7 @@ export class Klanten extends React.Component<RouteComponentProps<{}>, Customers>
                                         <ul>
                                             {sk.producten !== null &&
                                                 sk.producten.map((pn) => {
-                                                return (<li key={pn.productnummer}><a href={'/Product?product=' + pn.productnummer}>{pn.naam} | {pn.productnummer}</a></li>);
+                                                    return (<li key={pn.productnummer}><a href={'/Product?product=' + pn.productnummer}>{pn.naam} | {pn.productnummer}</a></li>);
                                                 }
                                                 )
                                             }
@@ -73,7 +81,18 @@ export class Klanten extends React.Component<RouteComponentProps<{}>, Customers>
                     );
                 })}
             </ul>
+            <form onSubmit={this.handleforminput(this)}>
+                Naam Klant:<br />
+                <input type="text" name="naam klant" />
+                <p>Producten:</p>
+                {this.producten.map((p) => {
+                    return (<p><input type="checkbox" name={p.naam} value={p.productnummer} /> {p.naam}</p>);
+                })}
+                <input type="submit" value="Voeg toe"/>
+            </form>
         </div>);
+        
+
     }
 
 
