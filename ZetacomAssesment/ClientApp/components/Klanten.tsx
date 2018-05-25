@@ -16,8 +16,6 @@ export class Klanten extends React.Component<RouteComponentProps<{}>, Customers>
         super();
     }
 
-    producten = [{ productnummer: 0, naam: "product 0" }, { productnummer: 1, naam: "product 1" }, { productnummer: 2, naam: "product 2" }, { productnummer: 3, naam: "product 3" }];
-
     customers = [
         {
             klantnummer: 1,
